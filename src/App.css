@@ -1,0 +1,513 @@
+/* =====================================================
+   LUSCHER TEST — Component Styles
+   Scoped inside Shadow DOM via :host
+   CSS custom properties can be overridden from outside:
+     luscher-test { --luscher-font: 'YourFont', sans-serif; }
+   ===================================================== */
+
+/* ---- HOST / RESET ---- */
+:host {
+    --luscher-font: Tektur, sans-serif;
+    --luscher-accent: #53887F;
+    --luscher-btn-dark: #27272A;
+    --luscher-btn-dark-hover: #53887f;
+    --luscher-btn-gray: #A1A1AA;
+    --luscher-btn-gray-hover: #53887f;
+    --luscher-btn-green: #53887f;
+    --luscher-btn-green-hover: #53887f;
+    --luscher-border: 1px dashed #71717A;
+    --luscher-radius: 24px;
+
+    display: block;
+    font-family: var(--luscher-font);
+    font-size: 16px;
+    line-height: 1.5;
+    color: #1a1a1a;
+    background-color: #ffffff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ---- LAYOUT ---- */
+.luscher-root {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    min-height: 100%;
+    background: #ffffff;
+}
+
+/* ---- PROGRESS BAR ---- */
+.luscher-progress-track {
+    width: 100%;
+    height: 8px;
+    background: #E4E4E7;
+    margin: 0 auto;
+}
+
+.luscher-progress-fill {
+    height: 100%;
+    background: var(--luscher-accent);
+    transition: width 0.5s ease;
+}
+
+/* ---- MAIN CONTENT ---- */
+.luscher-main {
+    margin: 0 auto;
+    padding: 48px 0 0;
+}
+
+/* ---- STAGE ---- */
+.luscher-stage {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    animation: luscher-fade-up 0.3s ease both;
+}
+
+.luscher-stage__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.luscher-stage__inner--compact {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.gap-24 {
+    gap: 24px;
+}
+
+@keyframes luscher-fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ---- CARD ---- */
+.luscher-card {
+    border: var(--luscher-border);
+    border-radius: var(--luscher-radius);
+    background: #ffffff;
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.luscher-card__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.luscher-card__label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.5;
+    color: #18181B;
+}
+
+.luscher-card__text {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #18181B;
+}
+
+.luscher-card__round-label {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.5;
+    color: #18181B;
+}
+
+/* ---- EXAMPLE VIDEO BLOCK ---- */
+.luscher-example-block {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 32px 60px 24px;
+    background: #f4f4f4;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.luscher-example-label {
+    position: absolute;
+    top: 18px;
+    left: 0;
+    width: 100%;
+    font-size: 12px;
+    color: #777777;
+    font-weight: 500;
+}
+
+.luscher-video {
+    display: block;
+    width: 100%;
+    height: 170px;
+    /* object-fit: cover; */
+    object-position: center;
+    border-radius: 4px;
+    clip-path: inset(0 4px);
+}
+
+/* ---- COUNT TEXT ---- */
+.luscher-count-text {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: #18181B;
+}
+
+/* ---- COLOR GRID ---- */
+.luscher-color-grid {
+    display: flex;
+    justify-content: center;
+}
+
+.luscher-color-card {
+    flex: 0 0 calc((100% - 8 * 6px) / 8);
+    margin-right: 6px;
+    margin-bottom: 6px;
+    aspect-ratio: 1 / 1;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    font-family: var(--luscher-font);
+    display: block;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+    transition: opacity 0.22s ease, flex-basis 0.3s ease, margin-right 0.3s ease;
+}
+
+.luscher-color-card__fill {
+    position: absolute;
+    inset: 0;
+    transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.luscher-color-card:hover .luscher-color-card__fill {
+    filter: brightness(0.88);
+}
+
+.luscher-color-card:active .luscher-color-card__fill {
+    transform: scale(0.82);
+    filter: brightness(0.82);
+    transition-duration: 0.08s, 0.08s;
+}
+
+.luscher-color-card.is-exiting {
+    transform: scale(0);
+    opacity: 0;
+    flex-basis: 0 !important;
+    margin-right: 0 !important;
+    pointer-events: none;
+    transition: transform 0.22s ease, opacity 0.22s ease, flex-basis 0.3s ease, margin-right 0.3s ease;
+}
+
+.luscher-color-card.is-selected {
+    transform: scale(0);
+    opacity: 0;
+    flex-basis: 0 !important;
+    margin-right: 0 !important;
+    pointer-events: none;
+    transition: flex-basis 0.3s ease, margin-right 0.3s ease;
+}
+
+/* ---- BUTTONS ---- */
+.luscher-btn-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.luscher-btn-row--left {
+    justify-content: flex-start;
+}
+
+.luscher-btn-primary,
+.luscher-btn-secondary,
+.luscher-btn-green {
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 85%;
+    font-family: var(--luscher-font);
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.luscher-btn-primary {
+    background: var(--luscher-btn-dark);
+    color: #ffffff;
+}
+
+.luscher-btn-primary:hover {
+    background: var(--luscher-btn-dark-hover);
+}
+
+.luscher-btn-secondary {
+    background: var(--luscher-btn-gray);
+    color: #ffffff;
+}
+
+.luscher-btn-secondary:hover {
+    background: var(--luscher-btn-gray-hover);
+}
+
+.luscher-btn-secondary:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.luscher-btn-green {
+    background: var(--luscher-btn-green);
+    color: #ffffff;
+    border-radius: var(--luscher-radius);
+}
+
+.luscher-btn-green:hover {
+    background: var(--luscher-btn-green-hover);
+}
+
+.luscher-link-btn {
+    background: none;
+    border: none;
+    color: #dc2626;
+    font-weight: 600;
+    font-family: var(--luscher-font);
+    font-size: 15px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.luscher-btn-primary--again {
+    margin-top: 36px;
+}
+
+/* ---- INSTRUCTIONS LIST ---- */
+.luscher-instructions-list {
+    list-style: disc;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #18181B;
+}
+
+/* ---- RESULT CARD ---- */
+.luscher-card--result {
+    gap: 8px;
+    border: 1px solid var(--brand-primary, #53887F);
+    background: rgba(83, 136, 127, 0.05);
+}
+
+.luscher-result-title {
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #18181B;
+}
+
+.luscher-result-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #18181B;
+}
+
+/* ---- AI SECTION ---- */
+.luscher-card--ai {
+    gap: 12px;
+}
+
+.luscher-ai-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px;
+    gap: 12px;
+    font-size: 14px;
+    color: #555555;
+}
+
+.luscher-ai-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: #dc2626;
+}
+
+/* ---- PROSE (ReactMarkdown) ---- */
+.luscher-prose {
+    font-size: 15px;
+    line-height: 1.75;
+    color: #333333;
+}
+
+.luscher-prose h1,
+.luscher-prose h2,
+.luscher-prose h3 {
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.3;
+    margin-top: 1.25em;
+    margin-bottom: 0.4em;
+}
+
+.luscher-prose h1 {
+    font-size: 22px;
+}
+
+.luscher-prose h2 {
+    font-size: 18px;
+}
+
+.luscher-prose h3 {
+    font-size: 16px;
+}
+
+.luscher-prose p {
+    margin-bottom: 0.85em;
+}
+
+.luscher-prose ul,
+.luscher-prose ol {
+    padding-left: 24px;
+    margin-bottom: 0.85em;
+}
+
+.luscher-prose li {
+    margin-bottom: 0.3em;
+}
+
+.luscher-prose strong {
+    font-weight: 700;
+}
+
+.luscher-prose em {
+    font-style: italic;
+}
+
+.luscher-prose a {
+    color: var(--luscher-accent);
+    text-decoration: underline;
+}
+
+/* ---- ICON SIZING ---- */
+.luscher-icon-sm {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+.luscher-icon-md {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.luscher-icon-xl {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    color: var(--luscher-accent);
+}
+
+/* ---- SPIN ANIMATION ---- */
+.luscher-spin {
+    animation: luscher-spin-anim 1s linear infinite;
+}
+
+@keyframes luscher-spin-anim {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ---- MOBILE ---- */
+@media (max-width: 768px) {
+    .luscher-color-card.is-exiting {
+        flex-basis: calc((100% - 8 * 6px) / 8) !important;
+        margin-right: 6px !important;
+    }
+
+    .luscher-color-card.is-selected {
+        flex-basis: calc((100% - 8 * 6px) / 8) !important;
+        margin-right: 6px !important;
+    }
+}
+
+@media (max-width: 520px) {
+    .luscher-color-grid {
+        flex-wrap: wrap;
+    }
+
+    .luscher-color-card {
+        flex: 0 0 calc((100% - 4 * 6px) / 4);
+    }
+
+    .luscher-color-card.is-exiting {
+        flex-basis: calc((100% - 4 * 6px) / 4) !important;
+        margin-right: 6px !important;
+    }
+
+    .luscher-color-card.is-selected {
+        flex-basis: calc((100% - 4 * 6px) / 4) !important;
+        margin-right: 6px !important;
+    }
+
+    .luscher-main {
+        padding: 24px 0 48px;
+    }
+}
