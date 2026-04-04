@@ -57,7 +57,7 @@ const INTERPRETATIONS = {
         goals: "Пошук магічного, інтуїтивного розуміння світу. Бажання зачаровувати та бути зачарованим. Чутливість, фантазія, емоційна зрілість.",
         actual: "Мрійливість, сентиментальність, інтуїтивне сприйняття реальності. Схильність до нестандартних рішень.",
         indifferent: "Прагматичний підхід. Фантазії та інтуїція відсунуті на другий план заради реальних справ.",
-        rejected: "Контроль над почуттями. Відмова від мрій заради 'суворої реальності'. Можливе пригнічення творчого потенціалу."
+        rejected: "Контроль над почуттями. Відмова від мрій заради «суворої реальності». Можливе пригнічення творчого потенціалу."
     },
     6: {
         goals: "Потреба у фізичному комфорті, затишку та безпеці. Бажання позбутися проблем, що турбують тіло або викликають тривогу.",
@@ -161,13 +161,15 @@ export default function App() {
         if (selectedColors.length < 8) return null;
         const s = selectedColors;
         const getText = (colors, type) => colors.map(c => INTERPRETATIONS[c.id][type]).join(' ');
-        return {
+        const results = {
             goals: getText(s.slice(0, 2), 'goals'),
             actual: getText(s.slice(2, 4), 'actual'),
             indifferent: getText(s.slice(4, 6), 'indifferent'),
             rejected: getText(s.slice(6, 8), 'rejected'),
             sequenceNames: s.map(c => c.name).join(', ')
         };
+
+        return results;
     };
 
     const results = stage === 'results' ? getResults() : null;
@@ -356,7 +358,7 @@ export default function App() {
 
                                 <div className="luscher-stage__inner--compact">
                                     <div className="luscher-card luscher-card--result">
-                                        <p className="luscher-result-title">1. ПРАГНЕННЯ ТА ЦЛІ (БАЖАНЕ)</p>
+                                        <p className="luscher-result-title">1. ПРАГНЕННЯ ТА ЦІЛІ (БАЖАНЕ)</p>
                                         <p className="luscher-result-label">Позиції 1 та 2 (++)</p>
                                         <p className="luscher-card__text">{results.goals}</p>
                                     </div>
@@ -436,7 +438,7 @@ export default function App() {
                                         <span>Важливе зауваження:</span>
                                     </div>
                                     <p className="luscher-card__text">
-                                        Цей тест є інструментом для самопізнання "тут і зараз". Результати залежать від моменту тестування.
+                                        Цей тест є інструментом для самопізнання «тут і зараз». Результати залежать від моменту тестування.
                                         Якщо результати вказують на сильний стрес (особливо в блоці 4), рекомендується відпочити або звернутися до фахівця.
                                     </p>
                                 </div>
