@@ -169,7 +169,8 @@ export default function App() {
             actual: getText(s.slice(2, 4), 'actual'),
             indifferent: getText(s.slice(4, 6), 'indifferent'),
             rejected: getText(s.slice(6, 8), 'rejected'),
-            sequenceNames: s.map(c => c.name).join(', '),
+            sequenceNamesRound1: round1Colors.map(c => c.name).join(', '),
+            sequenceNamesRound2: s.map(c => c.name).join(', '),
             sequenceRound1: round1Colors.map(c => c.emoji).join(''),
             sequenceRound2: s.map(c => c.emoji).join(''),
         };
@@ -192,7 +193,7 @@ export default function App() {
       Ти - професійний психолог та експерт з тесту Люшера.
       Користувач пройшов 8-кольоровий тест (друга вибірка використовується як основна).
 
-      Послідовність вибору кольорів (2-й прохід): ${results.sequenceNames}
+      Послідовність вибору кольорів (2-й прохід): ${results.sequenceNamesRound2}
 
       Стандартна інтерпретація (фрагменти):
       1. Бажані цілі (+): ${results.goals}
