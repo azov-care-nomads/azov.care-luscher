@@ -12,14 +12,14 @@ const API_KEY = 'API_KEY';
 
 // --- DATA ---
 const LUSCHER_COLORS = [
-    { id: 0, name: 'Сірий', hex: 'rgba(174, 174, 174, 1)' },
-    { id: 1, name: 'Синій', hex: 'rgba(0, 93, 147, 1)' },
-    { id: 2, name: 'Зелений', hex: 'rgba(34, 128, 79, 1)' },
-    { id: 3, name: 'Червоний', hex: 'rgba(255, 0, 0, 1)' },
-    { id: 4, name: 'Жовтий', hex: 'rgba(255, 236, 0, 1)' },
-    { id: 5, name: 'Фіолетовий', hex: 'rgba(162, 45, 148, 1)' },
-    { id: 6, name: 'Коричневий', hex: 'rgba(137, 63, 22, 1)' },
-    { id: 7, name: 'Чорний', hex: 'rgba(0, 0, 0, 1)' },
+    { id: 0, name: 'Сірий', hex: 'rgba(174, 174, 174, 1)', emoji: '⬜' },
+    { id: 1, name: 'Синій', hex: 'rgba(0, 93, 147, 1)', emoji: '🟦' },
+    { id: 2, name: 'Зелений', hex: 'rgba(34, 128, 79, 1)', emoji: '🟩' },
+    { id: 3, name: 'Червоний', hex: 'rgba(255, 0, 0, 1)', emoji: '🟥' },
+    { id: 4, name: 'Жовтий', hex: 'rgba(255, 236, 0, 1)', emoji: '🟨' },
+    { id: 5, name: 'Фіолетовий', hex: 'rgba(162, 45, 148, 1)', emoji: '🟪' },
+    { id: 6, name: 'Коричневий', hex: 'rgba(137, 63, 22, 1)', emoji: '🟫' },
+    { id: 7, name: 'Чорний', hex: 'rgba(0, 0, 0, 1)', emoji: '⬛' },
 ];
 
 const INTERPRETATIONS = {
@@ -90,6 +90,7 @@ export default function App() {
     const [round, setRound] = useState(1);
     const [roundColors, setRoundColors] = useState([]);
     const [selectedColors, setSelectedColors] = useState([]);
+    const [round1Colors, setRound1Colors] = useState([]);
     const [exitingColorIds, setExitingColorIds] = useState(new Set());
 
 
@@ -107,6 +108,7 @@ export default function App() {
         setRoundColors(shuffle());
         setRound(1);
         setSelectedColors([]);
+        setRound1Colors([]);
         setExitingColorIds(new Set());
         setAiAnalysis(null);
         setAiError(false);
@@ -116,6 +118,7 @@ export default function App() {
     const startTest = () => setStage('test');
 
     const startSecondRound = () => {
+        setRound1Colors(selectedColors);
         setRoundColors(shuffle());
         setRound(2);
         setSelectedColors([]);
@@ -166,13 +169,19 @@ export default function App() {
             actual: getText(s.slice(2, 4), 'actual'),
             indifferent: getText(s.slice(4, 6), 'indifferent'),
             rejected: getText(s.slice(6, 8), 'rejected'),
-            sequenceNames: s.map(c => c.name).join(', ')
+            sequenceNames: s.map(c => c.name).join(', '),
+            sequenceRound1: round1Colors.map(c => c.emoji).join(''),
+            sequenceRound2: s.map(c => c.emoji).join(''),
         };
 
         return results;
     };
 
     const results = stage === 'results' ? getResults() : null;
+
+    useEffect(() => {
+        if (stage === 'results' && results) console.log('Luscher test results:', results);
+    }, [stage]);
 
     const generateAIAnalysis = async () => {
         if (!results) return;
