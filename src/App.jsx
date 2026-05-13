@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import exampleVideo from './assets/example.mp4?url';
 import instructionIcon from './assets/instruction.svg?url';
@@ -9,6 +9,29 @@ import pauseIcon from './assets/pause.svg?url';
 import resultIcon from './assets/result.svg?url';
 
 const API_KEY = 'API_KEY';
+const RESULT_ENDPOINT = 'https://example.com/api/luscher';
+
+const getRecordIdFromUrl = () =>
+    new URLSearchParams(window.location.search).get('recordId');
+
+const sendResultToBackend = async (results) => {
+    const recordId = getRecordIdFromUrl();
+    if (!recordId) return;
+
+    const url = `${RESULT_ENDPOINT}${RESULT_ENDPOINT.includes('?') ? '&' : '?'}recordId=${encodeURIComponent(recordId)}`;
+    const payload = { luscherResult: JSON.stringify(results) };
+
+    try {
+        const res = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    } catch (err) {
+        console.error('Failed to send Luscher result:', err);
+    }
+};
 
 // --- DATA ---
 const LUSCHER_COLORS = [
@@ -98,6 +121,8 @@ export default function App() {
     const [loadingAi, setLoadingAi] = useState(false);
     const [aiError, setAiError] = useState(false);
 
+    const resultSentRef = useRef(false);
+
     useEffect(() => {
         resetTest();
     }, []);
@@ -112,6 +137,7 @@ export default function App() {
         setExitingColorIds(new Set());
         setAiAnalysis(null);
         setAiError(false);
+        resultSentRef.current = false;
         setStage('intro');
     };
 
@@ -181,7 +207,13 @@ export default function App() {
     const results = stage === 'results' ? getResults() : null;
 
     useEffect(() => {
-        if (stage === 'results' && results) console.log('Luscher test results:', results);
+        if (stage === 'results' && results) {
+            console.log('Luscher test results:', results);
+            if (!resultSentRef.current) {
+                resultSentRef.current = true;
+                sendResultToBackend(results);
+            }
+        }
     }, [stage]);
 
     const generateAIAnalysis = async () => {
