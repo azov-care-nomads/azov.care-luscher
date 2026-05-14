@@ -9,7 +9,7 @@ import pauseIcon from './assets/pause.svg?url';
 import resultIcon from './assets/result.svg?url';
 
 const API_KEY = 'API_KEY';
-const RESULT_ENDPOINT = 'https://example.com/api/luscher';
+const RESULT_ENDPOINT = 'https://ou4n7yrjr57onuskw2nxhg2eqe0ybkgw.lambda-url.eu-north-1.on.aws/';
 
 const getRecordIdFromUrl = () =>
     new URLSearchParams(window.location.search).get('recordId');
@@ -20,6 +20,10 @@ const sendResultToBackend = async (results) => {
 
     const url = `${RESULT_ENDPOINT}${RESULT_ENDPOINT.includes('?') ? '&' : '?'}recordId=${encodeURIComponent(recordId)}`;
     const payload = { luscherResult: JSON.stringify(results) };
+
+    console.log('POST →', url);
+    console.log('Payload:', payload);
+    console.log('Payload (raw JSON body):', JSON.stringify(payload, null, 2));
 
     try {
         const res = await fetch(url, {
